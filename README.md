@@ -6,10 +6,11 @@ Układ sterowania napędu zasilanego z ogniwa PV wspomaganego ultra-kondensatoro
 ## Add your files
 
 ```
-cd [existing_repo]
-git remote add origin https://gitlab.com/pbl-b-emob/naped_dc-pv-sc.git
-git branch -M [your_name]
-git push -uf origin [branch_name]
+git clone https://gitlab.com/pbl-b-emob/naped_dc-pv-sc.git
+cd [cloned_repo]
+git branch -M [branch_name]
+git commit -M "[txt of commit]"
+git push origin [branch_name]
 ```
 
 ## Modele PLECS
@@ -22,7 +23,13 @@ https://wutwaw-my.sharepoint.com/:f:/g/personal/01153009_pw_edu_pl/EtXvPZOxE1lCr
 ## IDE
 - VS Code 
 
-### Extensions
+### Install Extensions
 - C/C++
 - PlatformIO IDE
 
+### Comands
+
+Terminal > New Task or [Ctrl + Shift + P]
+Choose:
+- PlatformIO: Build <- To compile and build code
+- PlatformIO: Upload <- To upload code to the board
