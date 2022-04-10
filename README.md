@@ -19,3 +19,10 @@ https://wutwaw-my.sharepoint.com/:f:/g/personal/01153009_pw_edu_pl/EtXvPZOxE1lCr
 ## Hardware
 - Arduino UNO
 
+## IDE
+- VS Code 
+
+### Extensions
+- C/C++
+- PlatformIO IDE
+
