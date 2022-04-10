@@ -2,7 +2,8 @@
 #define CONTROL_LIB
 
 /*  PIcontroller  struct  */
-struct PICTRL {
+struct PICTRL
+{
   float y;
   float x;
   float Ts;
@@ -21,8 +22,8 @@ struct PICTRL {
   float min;
 };
 
-void InitPIctrl(struct PICTRL *pictrl, float Ts, float Kr, float Ti, float max,
-                float min);
+void InitPIctrl(struct PICTRL *pictrl, int Ts, float Kr, float Ti, int max,
+                int min);
 void CalcPIctrl(struct PICTRL *pictrl, float x);
 
 #endif

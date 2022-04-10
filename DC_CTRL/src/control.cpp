@@ -1,7 +1,8 @@
-#include "include/Control_lib.h"
+#include "include/control.h"
 
-void InitPIctrl(struct PICTRL *pictrl, float Ts, float Kr, float Ti, float max,
-                float min) {
+void InitPIctrl(struct PICTRL *pictrl, int Ts, float Kr, float Ti, int max,
+                int min)
+{
   /*
   Initialize struct of PI controller
   Args:
@@ -31,7 +32,8 @@ void InitPIctrl(struct PICTRL *pictrl, float Ts, float Kr, float Ti, float max,
   pictrl->min = min;
 }
 
-void CalcPIctrl(struct PICTRL *pictrl, float x) {
+void CalcPIctrl(struct PICTRL *pictrl, float x)
+{
   /*
   Calc output of PI controller
   Args: x - input of PI controller block
