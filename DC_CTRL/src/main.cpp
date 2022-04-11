@@ -1,8 +1,8 @@
-#include "include/Control.h"
-#include "include/Reg_param.h"
-#include "include/i2c.h"
-#include "include/PWM.h"
-#include "include/sensors.h"
+#include "../include/Control.h"
+#include "../include/Reg_param.h"
+#include "../../global_include/i2c.h"
+#include "../../global_include/PWM.h"
+#include "../../global_include/sensors.h"
 #include <Arduino.h>
 #include <Wire.h>
 
@@ -19,7 +19,7 @@ const float speed_ref = 100;
 
 void setup()
 {
-  I2C_begin();
+  I2C_begin_master();
 
   PWM_begin(PWM1_port);
   PWM_begin(PWM2_port);
@@ -35,6 +35,7 @@ void loop()
 
   CalcPIctrl(&PIctrl_speed, speed_ref - speed_sensor);
   CalcPIctrl(&PIctrl_curr, PIctrl_speed.y - speed_sensor);
+
   PWM_write(PWM1_port, PIctrl_curr.y);
   PWM_write(PWM2_port, -PIctrl_curr.y);
 }

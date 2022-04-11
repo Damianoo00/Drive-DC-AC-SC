@@ -1,4 +1,4 @@
-#include "include/control.h"
+#include "../include/control.h"
 
 void InitPIctrl(struct PICTRL *pictrl, int Ts, float Kr, float Ti, int max,
                 int min)
