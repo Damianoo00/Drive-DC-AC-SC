@@ -1,8 +1,8 @@
 #include "../include/Control.h"
 #include "../include/Reg_param.h"
-#include "../../global_include/i2c.h"
-#include "../../global_include/PWM.h"
-#include "../../global_include/sensors.h"
+#include "../include/i2c.h"
+#include "../include/PWM.h"
+#include "../include/sensors.h"
 #include <Arduino.h>
 #include <Wire.h>
 

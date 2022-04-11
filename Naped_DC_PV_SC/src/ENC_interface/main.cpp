@@ -1,4 +1,4 @@
-#include "../../global_include/i2c.h"
+#include "../include/i2c.h"
 #include "../include/global_val.h"
 #include <Arduino.h>
 #include <RotaryEncoder.h>
