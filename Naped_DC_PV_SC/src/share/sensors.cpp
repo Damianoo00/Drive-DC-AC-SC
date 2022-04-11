@@ -1,4 +1,4 @@
-#include "../../global_include/sensors.h"
+#include "../include/sensors.h"
 
 float read_current(int analog_output, int prescaler)
 {
