@@ -12,18 +12,18 @@ void InitPIctrl(struct PICTRL *pictrl, int Ts, float Kr, float Ti, int max,
           max - max saturation limit
           min - min saturation limit
   */
-  pictrl->x = 0;
-  pictrl->y = 0;
+  pictrl->x = 0.0;
+  pictrl->y = 0.0;
 
-  pictrl->a = 0;
-  pictrl->b = 0;
-  pictrl->c = 0;
-  pictrl->c_1 = 0;
-  pictrl->d = 0;
-  pictrl->d_1 = 0;
-  pictrl->e = 0;
-  pictrl->f = 0;
-  pictrl->f_1 = 0;
+  pictrl->a = 0.0;
+  pictrl->b = 0.0;
+  pictrl->c = 0.0;
+  pictrl->c_1 = 0.0;
+  pictrl->d = 0.0;
+  pictrl->d_1 = 0.0;
+  pictrl->e = 0.0;
+  pictrl->f = 0.0;
+  pictrl->f_1 = 0.0;
 
   pictrl->Ts = Ts;
   pictrl->Kr = Kr;

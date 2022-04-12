@@ -1,32 +1,22 @@
-#include "../include/i2c.h"
-#include "../include/global_val.h"
-#include <Arduino.h>
+#include "../include/uart.h"
+#include "../include/encoder.h"
 #include <RotaryEncoder.h>
+#include <stdint.h>
 
-#define PIN_IN1 2
-#define PIN_IN2 3
+#define ENC_PIN1 7
+#define ENC_PIN2 8
 
-RotaryEncoder encoder(PIN_IN1, PIN_IN2, RotaryEncoder::LatchMode::TWO03);
-int time;
-int dx, dt;
+RotaryEncoder encoder(ENC_PIN1, ENC_PIN2, RotaryEncoder::LatchMode::TWO03);
+int16_t speed;
 
 void setup()
 {
-  I2C_begin_slave(54);
-  I2C_hearing();
+  uart_begin(9600);
+  speed = 0;
 }
 
 void loop()
 {
-  static int pos = 0;
-  encoder.tick();
-  time = millis();
-  int newPos = encoder.getPosition();
-  if (pos != newPos)
-  {
-    dx = newPos - pos;
-    dt = millis() - time;
-    speed = dx / dt;
-    pos = newPos;
-  }
+  speed = get_speed_from_encoder(encoder);
+  uart_transmit(speed);
 }
