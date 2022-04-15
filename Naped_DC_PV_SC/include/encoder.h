@@ -3,7 +3,12 @@
 
 #include <RotaryEncoder.h>
 
-int get_speed_from_encoder(RotaryEncoder);
+class MyEncoder : private RotaryEncoder
+{
+    MyEncoder(int pin1, int pin2, LatchMode mode = LatchMode::TWO03) : RotaryEncoder(pin1, pin2, mode){};
+};
+
+int get_speed_from_encoder(RotaryEncoder *, int);
 void enable_encoder(int, int);
 
 #endif

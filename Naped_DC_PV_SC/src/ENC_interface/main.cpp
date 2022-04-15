@@ -18,5 +18,6 @@ void setup()
 void loop()
 {
   speed = get_speed_from_encoder(encoder);
-  uart_transmit(speed);
+  //  uart_transmit(speed);
+  uart_transmit_as_string(speed);
 }
