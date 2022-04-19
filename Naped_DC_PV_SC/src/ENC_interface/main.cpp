@@ -1,23 +1,32 @@
-#include "../include/uart.h"
 #include "../include/encoder.h"
-#include <RotaryEncoder.h>
-#include <stdint.h>
+#include "../include/uart.h"
 
-#define ENC_PIN1 7
-#define ENC_PIN2 8
+#define WORK
 
-RotaryEncoder encoder(ENC_PIN1, ENC_PIN2, RotaryEncoder::LatchMode::TWO03);
-int16_t speed;
+/******* PIN_IN *********/
+#define ENC_A 7
+#define ENC_B 8
+
+/*** Encoder params ***/
+#define ENC_res 2500
+#define Ts 1 // ms
+
+/**** UART params ****/
+#define BAUND 9600
+
+MyEncoder encoder(ENC_A, ENC_B, ENC_res, Ts, MyEncoder::LatchMode::TWO03);
 
 void setup()
 {
-  uart_begin(9600);
-  speed = 0;
+  uart_begin(BAUND);
 }
-
 void loop()
 {
-  speed = get_speed_from_encoder(encoder);
-  //  uart_transmit(speed);
-  uart_transmit_as_string(speed);
+
+#ifdef WORK
+  uart_transmit(encoder.get_speed());
+#endif
+#ifdef TEST
+  uart_transmit_as_string(encoder.get_speed(), Ts);
+#endif
 }

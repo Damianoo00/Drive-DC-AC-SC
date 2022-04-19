@@ -5,10 +5,12 @@
 #include <Arduino.h>
 #include <stdint.h>
 
+/***** POUT *****/
 #define PWM1_port 11
 #define PWM2_port 10
 #define CURR_PORT A0
 
+/*** REG params ***/
 const float Ts = 10e3;
 const float Kr_i = 3.2593;
 const float Tr_i = 4.6136;
@@ -25,9 +27,8 @@ struct PICTRL PIctrl_speed;
 int8_t curr_sensor = 0;
 int8_t speed_sensor = 0;
 
-/* reference speed value */
+/* REF speed value */
 const int8_t speed_ref = 100;
-/************************/
 
 void setup()
 {

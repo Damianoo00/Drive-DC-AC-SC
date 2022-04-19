@@ -3,7 +3,13 @@
 #include <stdint.h>
 #include "../include/encoder.h"
 
-int get_speed_from_encoder(RotaryEncoder *encoder, int sampling_time)
+MyEncoder::MyEncoder(int pin1, int pin2, int resolution, int sample_time, LatchMode mode = LatchMode ::TWO03) : RotaryEncoder(pin1, pin2, mode)
+{
+    _resolution = resolution;
+    _sample_time = sample_time;
+}
+
+int MyEncoder::get_speed()
 {
     static int d_pos;
     static int pos_1 = 0;
@@ -11,19 +17,19 @@ int get_speed_from_encoder(RotaryEncoder *encoder, int sampling_time)
     static int pos = 0;
     static int newPos;
 
-    encoder->tick();
-    newPos = encoder->getPosition();
+    tick();
+    newPos = getPosition();
 
     if (pos != newPos)
     {
         pos = newPos;
     }
 
-    if ((millis() - time) > sampling_time)
+    if ((millis() - time) > _sample_time)
     {
         d_pos = pos - pos_1;
         pos_1 = pos;
         time = millis();
-        return d_pos * (1000 / sampling_time) / 2500;
+        return d_pos * (60 * 1000 / _sample_time) / _resolution;
     }
 }

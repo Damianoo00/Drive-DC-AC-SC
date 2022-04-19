@@ -1,6 +1,10 @@
 #ifndef UART_H
 #define UART_H
 
+class Uart
+{
+};
+
 void uart_begin(int);
 int uart_recive();
 void uart_transmit(int);

@@ -3,9 +3,16 @@
 
 #include <RotaryEncoder.h>
 
-class MyEncoder : private RotaryEncoder
+class MyEncoder : public RotaryEncoder
 {
-    MyEncoder(int pin1, int pin2, LatchMode mode = LatchMode::TWO03) : RotaryEncoder(pin1, pin2, mode){};
+public:
+    MyEncoder(int pin1, int pin2, int resolution, int sample_time, LatchMode mode);
+    int get_speed();
+
+private:
+    using RotaryEncoder::RotaryEncoder;
+    int _resolution;
+    int _sample_time;
 };
 
 int get_speed_from_encoder(RotaryEncoder *, int);
