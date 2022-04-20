@@ -5,6 +5,8 @@
 #include <Arduino.h>
 #include <stdint.h>
 
+#define WORK
+
 /***** POUT *****/
 #define PWM1_port 11
 #define PWM2_port 10
@@ -24,8 +26,8 @@ const int8_t min_v = -126;
 
 struct PICTRL PIctrl_curr;
 struct PICTRL PIctrl_speed;
-int8_t curr_sensor = 0;
-int8_t speed_sensor = 0;
+int curr_sensor = 0;
+int speed_sensor = 0;
 
 /* REF speed value */
 const int8_t speed_ref = 100;
@@ -43,12 +45,23 @@ void setup()
 
 void loop()
 {
+#ifdef WORK
   curr_sensor = read_current(CURR_PORT, 1);
   speed_sensor = uart_recive();
+#endif
+
+#ifdef TEST
+  uart_recive_curr_n_speed(&curr_sensor, &speed_sensor);
+  uart_transmit_as_string(curr_sensor, 1000);
+#endif
 
   CalcPIctrl(&PIctrl_speed, speed_ref - speed_sensor);
   CalcPIctrl(&PIctrl_curr, PIctrl_speed.y - speed_sensor);
 
   PWM_write(PWM1_port, PIctrl_curr.y);
   PWM_write(PWM2_port, -PIctrl_curr.y);
+
+#ifdef TEST
+  // uart_transmit_as_string(curr_sensor, 2000);
+#endif
 }

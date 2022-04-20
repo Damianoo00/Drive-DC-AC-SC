@@ -13,10 +13,18 @@ int uart_recive()
         return Serial.read();
     }
 }
+
 void uart_transmit(int value)
 {
 
     Serial.write(value);
+    Serial.write('\n');
+}
+
+void uart_transmit_string(char *str)
+{
+
+    Serial.write(str);
     Serial.write('\n');
 }
 
@@ -32,4 +40,16 @@ void uart_transmit_as_string(int value, int time_interval)
         Serial.write('\n');
         time = millis();
     }
+}
+
+void uart_recive_curr_n_speed(int *curr, int *speed)
+{
+    static char buffor[10];
+    int i = 0;
+    while (Serial.available())
+    {
+        buffor[i++] = Serial.read();
+    }
+    *curr = atoi(strtok(buffor, ","));
+    *speed = atoi(strtok(NULL, ","));
 }
