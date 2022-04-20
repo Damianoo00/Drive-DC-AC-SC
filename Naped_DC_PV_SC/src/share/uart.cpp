@@ -51,5 +51,5 @@ void uart_recive_curr_n_speed(int *curr, int *speed)
         buffor[i++] = Serial.read();
     }
     *curr = atoi(strtok(buffor, ","));
-    *speed = atoi(strtok(NULL, ","));
+    *speed = atoi(strtok(NULL, ",\n"));
 }

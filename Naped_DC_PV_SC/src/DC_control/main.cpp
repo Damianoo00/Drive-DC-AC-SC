@@ -5,12 +5,15 @@
 #include <Arduino.h>
 #include <stdint.h>
 
-#define WORK
+#define TEST
 
 /***** POUT *****/
 #define PWM1_port 11
 #define PWM2_port 10
 #define CURR_PORT A0
+
+/*** UART params***/
+#define BAUD 9600
 
 /*** REG params ***/
 const float Ts = 10e3;
@@ -26,15 +29,15 @@ const int8_t min_v = -126;
 
 struct PICTRL PIctrl_curr;
 struct PICTRL PIctrl_speed;
-int curr_sensor = 0;
-int speed_sensor = 0;
+static int curr_sensor = 0;
+static int speed_sensor = 0;
 
 /* REF speed value */
 const int8_t speed_ref = 100;
 
 void setup()
 {
-  uart_begin(9600);
+  uart_begin(BAUD);
 
   PWM_begin(PWM1_port);
   PWM_begin(PWM2_port);
@@ -52,7 +55,6 @@ void loop()
 
 #ifdef TEST
   uart_recive_curr_n_speed(&curr_sensor, &speed_sensor);
-  uart_transmit_as_string(curr_sensor, 1000);
 #endif
 
   CalcPIctrl(&PIctrl_speed, speed_ref - speed_sensor);
@@ -62,6 +64,6 @@ void loop()
   PWM_write(PWM2_port, -PIctrl_curr.y);
 
 #ifdef TEST
-  // uart_transmit_as_string(curr_sensor, 2000);
+  uart_transmit_as_string(curr_sensor, 2000);
 #endif
 }
