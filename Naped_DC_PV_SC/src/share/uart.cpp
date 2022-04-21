@@ -12,6 +12,7 @@ int uart_recive()
     {
         return Serial.read();
     }
+    return 0;
 }
 
 void uart_transmit(int value)
@@ -28,9 +29,9 @@ void uart_transmit_string(char *str)
     Serial.write('\n');
 }
 
-void uart_transmit_as_string(int value, int time_interval)
+void uart_transmit_as_string(int value, unsigned int time_interval)
 {
-    static int time = 0;
+    static unsigned int time = 0;
 
     if ((millis() - time) > time_interval)
     {
