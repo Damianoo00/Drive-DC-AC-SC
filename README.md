@@ -27,6 +27,10 @@ Układ sterowania napędu zasilanego z ogniwa PV wspomaganego ultra-kondensatoro
 - Arduino UNO
 - Arduino LEONARDO
 
+## Schemes
+### DC Controll
+![DC_control_scheme](schemes/DC_ctrl_sh.png)
+
 ## IDE
 - VS Code 
 

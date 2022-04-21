@@ -56,14 +56,12 @@ void loop()
 #ifdef TEST
   uart_recive_curr_n_speed(&curr_sensor, &speed_sensor);
 #endif
-
-  CalcPIctrl(&PIctrl_speed, speed_ref - speed_sensor);
-  CalcPIctrl(&PIctrl_curr, PIctrl_speed.y - speed_sensor);
+  CalcPIctrl(&PIctrl_curr, speed_ref - speed_sensor);
 
   PWM_write(PWM1_port, PIctrl_curr.y);
   PWM_write(PWM2_port, -PIctrl_curr.y);
 
 #ifdef TEST
-  uart_transmit_as_string(curr_sensor, 2000);
+  uart_transmit(PIctrl_curr.y);
 #endif
 }
