@@ -14,4 +14,7 @@ def logg_data_from_uart(serial_device: serial.Serial, log_path: str):
 
 
 arduino = serial.Serial(port='COM3', baudrate=9600, timeout=1)
-logg_data_from_uart(arduino, 'log.txt')
+try:
+    logg_data_from_uart(arduino, 'log.txt')
+except(KeyboardInterrupt):
+    print("Interupt")
