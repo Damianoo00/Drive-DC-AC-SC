@@ -1,56 +1,39 @@
 #include <Arduino.h>
 #include <string.h>
 
-void uart_begin(int baundrate)
+void uart_begin(long baundrate, int timeout)
 {
     Serial.begin(baundrate);
+    Serial.setTimeout(timeout);
 }
 
 int uart_recive()
 {
-    if (Serial.available())
+    while (!Serial.available())
     {
-        return Serial.read();
+        /* waiting for mess */
     }
-    return 0;
+    return Serial.readString().toInt();
 }
 
-void uart_transmit(int value)
+void uart_transmit(int val)
 {
 
-    Serial.write(value);
-    Serial.write('\n');
+    Serial.println(val);
 }
 
-void uart_transmit_string(char *str)
+void log_uart(unsigned long CLK, int speed_ref, int speed_sensor, int curr_ref, int curr_sensor, int ctr_sig)
 {
-
-    Serial.write(str);
-    Serial.write('\n');
-}
-
-void uart_transmit_as_string(int value, unsigned int time_interval)
-{
-    static unsigned int time = 0;
-
-    if ((millis() - time) > time_interval)
-    {
-        static char buffer[10];
-        itoa(value, buffer, 10);
-        Serial.write(buffer);
-        Serial.write('\n');
-        time = millis();
-    }
-}
-
-void uart_recive_curr_n_speed(int *curr, int *speed)
-{
-    static char buffor[10];
-    int i = 0;
-    while (Serial.available())
-    {
-        buffor[i++] = Serial.read();
-    }
-    *curr = atoi(strtok(buffor, ","));
-    *speed = atoi(strtok(NULL, ",\n"));
+    Serial.print(CLK);
+    Serial.print(",");
+    Serial.print(speed_ref);
+    Serial.print(",");
+    Serial.print(speed_sensor);
+    Serial.print(",");
+    Serial.print(curr_ref);
+    Serial.print(",");
+    Serial.print(curr_sensor);
+    Serial.print(",");
+    Serial.print(ctr_sig);
+    Serial.print("\n");
 }

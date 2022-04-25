@@ -5,15 +5,15 @@
 #include <Arduino.h>
 #include <stdint.h>
 
-#define TEST
-
+#define LOG
 /***** POUT *****/
 #define PWM1_port 11
 #define PWM2_port 10
 #define CURR_PORT A0
 
 /*** UART params***/
-#define BAUD 9600
+#define BAUD 115200
+#define TIMEOUT 10
 
 /*** REG params ***/
 const float Ts = 10e3;
@@ -23,14 +23,15 @@ const int8_t max_i = 1;
 const int8_t min_i = -1;
 
 struct PICTRL PIctrl_curr;
-static int curr_sensor = 0;
+static int curr_sensor = 10;
 
 /* REF speed value */
-const int8_t current_ref = 10;
+const int current_ref = 105;
 
 void setup()
 {
-  uart_begin(BAUD);
+  Serial.begin(BAUD);
+  Serial.setTimeout(TIMEOUT);
 
   PWM_begin(PWM1_port);
   PWM_begin(PWM2_port);
@@ -40,12 +41,12 @@ void setup()
 
 void loop()
 {
+
 #ifdef WORK
   curr_sensor = read_current(CURR_PORT, 1);
-  speed_sensor = uart_recive();
 #endif
 
-#ifdef TEST
+#ifdef SET_CURR
   curr_sensor = uart_recive();
 #endif
   CalcPIctrl(&PIctrl_curr, current_ref - curr_sensor);
@@ -53,7 +54,7 @@ void loop()
   PWM_write(PWM1_port, PIctrl_curr.y);
   PWM_write(PWM2_port, -PIctrl_curr.y);
 
-#ifdef TEST
-  uart_transmit(PIctrl_curr.y);
+#ifdef LOG
+  log_uart(millis(), 0, 0, current_ref, curr_sensor, PIctrl_curr.y);
 #endif
 }
