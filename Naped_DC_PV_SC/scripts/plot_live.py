@@ -1,4 +1,4 @@
-import enum
+from serial_param import PORT, BAUDRATE, TIMEOUT
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import serial
@@ -7,9 +7,9 @@ import if_plot
 
 
 arduino = serial.Serial()
-arduino.port = 'COM3'
-arduino.baudrate = 9600
-arduino.timeout = .1
+arduino.port = PORT
+arduino.baudrate = BAUDRATE
+arduino.timeout = TIMEOUT
 arduino.open()
 if arduino.is_open == True:
     print("Port is open!\n")
@@ -73,7 +73,7 @@ def animate(i):
     # Format plot
     plt.xticks(rotation=45, ha='right')
     plt.subplots_adjust(bottom=0.30)
-    plt.title('My Plotter')
+    plt.title('Value plotter')
     plt.ylabel('Value')
     plt.legend()
     plt.axis([1, time_of_simulation, None, None])
@@ -83,6 +83,4 @@ list_of_args = (time, curr_ref)
 ani = animation.FuncAnimation(
     fig, animate, interval=100)
 plt.show()
-
-
 flog.close()

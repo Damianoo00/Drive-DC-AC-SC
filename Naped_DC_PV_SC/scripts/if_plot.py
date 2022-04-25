@@ -1,7 +1,7 @@
 if_plot = {
-    'Speed_sensor': True,
-    'Speed_ref': True,
+    'Speed_sensor': False,
+    'Speed_ref': False,
     'Curr_sensor': True,
     'Curr_ref': True,
-    'Control_signal': True
+    'Control_signal': False
 }

@@ -18,9 +18,9 @@ if if_plot.if_plot['Control_signal'] == True:
     ax.plot(data['CLK'], data['ctr_sig'], label="Control Signal")
 
     # Format plot
-    plt.xticks(rotation=45, ha='right')
-    plt.subplots_adjust(bottom=0.30)
-    plt.title('My Plotter')
-    plt.ylabel('Value')
-    plt.legend()
-    plt.show()
+plt.xticks(rotation=45, ha='right')
+plt.subplots_adjust(bottom=0.30)
+plt.title('My Plotter')
+plt.ylabel('Value')
+plt.legend()
+plt.show()

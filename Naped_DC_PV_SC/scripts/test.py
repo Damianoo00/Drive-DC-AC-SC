@@ -1,11 +1,12 @@
 # Importing Libraries
 import serial
+from serial_param import BAUDRATE, PORT, TIMEOUT
 import time
-arduino = serial.Serial(port='COM3', baudrate=9600, timeout=.1)
+arduino = serial.Serial(port=PORT, baudrate=BAUDRATE, timeout=TIMEOUT)
 
 
 def write_read(x):
-    arduino.write(bytes(x, 'utf-8'))
+    arduino.write(bytes(x + '\n', 'utf-8'))
     time.sleep(0.05)
     data = arduino.readline()
     return data
