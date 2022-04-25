@@ -8,7 +8,7 @@ Układ sterowania napędu zasilanego z ogniwa PV wspomaganego ultra-kondensatoro
 ```
 >git clone https://gitlab.com/pbl-b-emob/naped_dc-pv-sc.git
 
->git add remote https://gitlab.com/pbl-b-emob/naped_dc-pv-sc.git
+>git add remote origin https://gitlab.com/pbl-b-emob/naped_dc-pv-sc.git
 
 >cd [cloned_repo]
 
@@ -66,3 +66,18 @@ board = [board_model]
 framework = arduino
 src_filter = -<*> +<[project_name]/> +<share/>
 ```
+
+# Tests
+To test correct working of program we will use program *scripts/ArduinoPlotter.py*
+This programm allow to plot:
+- speed_ref
+- speed_sensor
+- curr_ref
+- curr_sensor
+To test of Analog inputs, Comunication protocols and writing code.
+
+
+Please visit code documentation 
+
+[ArduinoPlotter documentation](Naped_DC_PV_SC/scripts/README.md)
+---
