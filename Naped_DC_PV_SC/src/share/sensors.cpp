@@ -1,6 +1,17 @@
 #include "../include/sensors.h"
-
-float read_current(int analog_output, int prescaler)
+#include <Arduino.h>
+int read_current(int pin, int resistance)
+/* read current value [mA] "Shut method"
+Args:
+    pin - pin adress
+    resistance - shunt resistance
+ */
 {
-    return analog_output * 3.3f / 255.0f * prescaler;
+    int analog_output = analogRead(pin);
+
+    const int AmperToMiliamper = 1000;
+    const float AdcToVolt = 3.3f / 255.0f;
+
+    return analog_output *
+           AmperToMiliamper * AdcToVolt / resistance;
 }

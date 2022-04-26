@@ -7,6 +7,7 @@
 
 #define LOG
 #define SET_CURR
+
 /***** POUT *****/
 #define PWM1_port 11
 #define PWM2_port 10
@@ -24,15 +25,17 @@ const int8_t max_i = 1;
 const int8_t min_i = -1;
 
 struct PICTRL PIctrl_curr;
-static int curr_sensor = 10;
+static int curr_sensor = 0;
 
 /* REF speed value */
 const int current_ref = 105;
 
 void setup()
 {
-  Serial.begin(BAUD);
-  Serial.setTimeout(TIMEOUT);
+  // Serial.begin(BAUD);
+  // Serial.setTimeout(TIMEOUT);
+
+  uart_begin(BAUD, TIMEOUT);
 
   PWM_begin(PWM1_port);
   PWM_begin(PWM2_port);

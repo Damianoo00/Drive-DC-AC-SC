@@ -1,0 +1,44 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "DC_CTR - Logs Plot",
+            "type": "shell",
+            "command": "./Naped_DC_PV_SC/scripts/ArduinoPlotter.py",
+            "windows": {
+                "command": "python .\\scripts\\ArduinoPlotter.py --log_file=.\\data\\log.txt"
+            },
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "DC_CTR - Live Plot",
+            "type": "shell",
+            "command": "./Naped_DC_PV_SC/scripts/ArduinoPlotter.py",
+            "windows": {
+                "command": "python .\\scripts\\ArduinoPlotter.py -live --log_file=.\\data\\log.txt"
+            },
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "DC_CTR - Send Live Plot",
+            "type": "shell",
+            "command": "./Naped_DC_PV_SC/scripts/ArduinoPlotter.py",
+            "windows": {
+                "command": "python .\\scripts\\ArduinoPlotter.py -live -send --log_file=.\\data\\log.txt --send_data=.\\data\\data.csv"
+            },
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        }
+    ]
+}

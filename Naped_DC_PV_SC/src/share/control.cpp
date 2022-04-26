@@ -2,9 +2,7 @@
 
 void InitPIctrl(struct PICTRL *pictrl, int Ts, float Kr, float Ti, int max,
                 int min)
-{
-  /*
-  Initialize struct of PI controller
+/*Initialize struct of PI controller
   Args:
           Ts - Sample time
           Kr - amplification of regulator
@@ -12,6 +10,7 @@ void InitPIctrl(struct PICTRL *pictrl, int Ts, float Kr, float Ti, int max,
           max - max saturation limit
           min - min saturation limit
   */
+{
   pictrl->x = 0.0;
   pictrl->y = 0.0;
 
@@ -33,11 +32,11 @@ void InitPIctrl(struct PICTRL *pictrl, int Ts, float Kr, float Ti, int max,
 }
 
 void CalcPIctrl(struct PICTRL *pictrl, float x)
-{
-  /*
-  Calc output of PI controller
-  Args: x - input of PI controller block
+/*Calc output of PI controller and return on [struct].y
+  Args:
+    x - input of PI controller block
    */
+{
   pictrl->x = x;
   pictrl->a = pictrl->Kr * pictrl->x;
 

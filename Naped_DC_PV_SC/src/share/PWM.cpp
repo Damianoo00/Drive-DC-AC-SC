@@ -1,12 +1,14 @@
 #include "../include/PWM.h"
 #include <Arduino.h>
 
-void PWM_begin(int port)
+void PWM_begin(int pin)
+/* Set pin in OUTPUT mode */
 {
-    pinMode(port, OUTPUT);
+    pinMode(pin, OUTPUT);
 }
 
-void PWM_write(int port, int duty)
+void PWM_write(int pin, int duty)
+/* Genarate PWM with set duty and output it on pin */
 {
-    analogWrite(port, duty);
+    analogWrite(pin, duty);
 }

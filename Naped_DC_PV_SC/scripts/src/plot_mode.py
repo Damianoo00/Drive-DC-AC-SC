@@ -1,3 +1,4 @@
+from cmath import log
 from matplotlib.animation import FuncAnimation
 import src.animations as animations
 from matplotlib import pyplot as plt
@@ -6,28 +7,41 @@ import serial
 import params
 
 
-def PlotSerial(send_uart_dest: str, column: str, serial_device: serial.Serial):
+def PlotSerial(serial_device: serial.Serial, log_file: str):
+    """ Only plot live recived data """
+
     fig, axes = plt.subplots(figsize=(10, 5))
     plt.style.use("ggplot")
 
     time, speed_ref, speed_sensor, curr_ref, curr_sensor, control_signal = [], [], [], [], [], []
 
-    if send_uart_dest == "":
-        anim = FuncAnimation(fig, animations.get_animate, fargs=(
-            time, speed_ref, speed_sensor, curr_ref, curr_sensor, control_signal, axes, serial_device), interval=100)
-
-    else:
-        prepard_data = pd.read_csv(send_uart_dest)[column]
-        anim = FuncAnimation(fig, animations.recive_n_get_animate, fargs=(
-            prepard_data, time, speed_ref, speed_sensor, curr_ref, curr_sensor, control_signal, axes, serial_device), interval=100)
+    anim = FuncAnimation(fig, animations.get_animate, fargs=(
+        log_file, time, speed_ref, speed_sensor, curr_ref, curr_sensor, control_signal, axes, serial_device), interval=100)
 
     plt.show()
 
 
-def PlotLogs():
+def SendPlotSerial(send_uart_dest: str, column: str, serial_device: serial.Serial, log_file: str):
+    """ Send data and plot board recive on it """
+
     fig, axes = plt.subplots(figsize=(10, 5))
     plt.style.use("ggplot")
-    data = pd.read_csv('../data/log.txt')
+
+    time, speed_ref, speed_sensor, curr_ref, curr_sensor, control_signal = [], [], [], [], [], []
+
+    prepard_data = pd.read_csv(send_uart_dest)[column]
+    anim = FuncAnimation(fig, animations.send_n_get_animate, fargs=(
+        log_file, prepard_data, time, speed_ref, speed_sensor, curr_ref, curr_sensor, control_signal, axes, serial_device), interval=100)
+
+    plt.show()
+
+
+def PlotLogs(log_file: str):
+    """ Plot data saved in log file """
+
+    fig, axes = plt.subplots(figsize=(10, 5))
+    plt.style.use("ggplot")
+    data = pd.read_csv(log_file)
     if params.SPEED_REF:
         axes.plot(data["CLK"], data["speed_ref"], label="Speed ref")
     if params.SPEED_SENSOR:
