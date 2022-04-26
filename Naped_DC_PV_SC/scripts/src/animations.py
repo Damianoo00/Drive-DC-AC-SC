@@ -47,12 +47,12 @@ def send_n_get_params_from_serial_device(value, serial_device: serial.Serial):
     return 0, 0, 0, 0, 0, 0
 
 
-def recive_n_get_animate(i, sensors: open, time: int, speed_ref: int, speed_sensor: int, curr_ref: int, curr_sensor: int, control_signal: int, axes, serial_device: serial.Serial):
-    if (i > sensors["curr_sensor"].size):
+def recive_n_get_animate(i, data_to_send: str, time: int, speed_ref: int, speed_sensor: int, curr_ref: int, curr_sensor: int, control_signal: int, axes, serial_device: serial.Serial):
+    if (i > data_to_send.size):
         exit()
 
     time_v, speed_ref_v, speed_sensor_v, curr_ref_v, curr_sensor_v, control_signal_v = send_n_get_params_from_serial_device(
-        sensors["curr_sensor"][i], serial_device)
+        data_to_send[i], serial_device)
     time.append(time_v)
     speed_ref.append(speed_ref_v)
     speed_sensor.append(speed_sensor_v)

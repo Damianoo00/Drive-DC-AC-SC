@@ -6,6 +6,7 @@
 #include <stdint.h>
 
 #define LOG
+#define SET_CURR
 /***** POUT *****/
 #define PWM1_port 11
 #define PWM2_port 10

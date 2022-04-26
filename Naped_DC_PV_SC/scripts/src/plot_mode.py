@@ -6,7 +6,7 @@ import serial
 import params
 
 
-def PlotSerial(send_uart_dest: str, serial_device: serial.Serial):
+def PlotSerial(send_uart_dest: str, column: str, serial_device: serial.Serial):
     fig, axes = plt.subplots(figsize=(10, 5))
     plt.style.use("ggplot")
 
@@ -17,7 +17,7 @@ def PlotSerial(send_uart_dest: str, serial_device: serial.Serial):
             time, speed_ref, speed_sensor, curr_ref, curr_sensor, control_signal, axes, serial_device), interval=100)
 
     else:
-        prepard_data = pd.read_csv(send_uart_dest)
+        prepard_data = pd.read_csv(send_uart_dest)[column]
         anim = FuncAnimation(fig, animations.recive_n_get_animate, fargs=(
             prepard_data, time, speed_ref, speed_sensor, curr_ref, curr_sensor, control_signal, axes, serial_device), interval=100)
 
