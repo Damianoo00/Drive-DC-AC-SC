@@ -1,5 +1,6 @@
 #include "../include/sensors.h"
 #include <Arduino.h>
+#include <RotaryEncoder.h>
 int read_current(int pin, int resistance)
 /* read current value [mA] "Shut method", resistance in mOhm
 Args:
@@ -13,4 +14,11 @@ Args:
     const int AdcToMilivolt = 5000 / 255;
 
     return AmperToMiliamper * analog_output * AdcToMilivolt / resistance;
+}
+
+int get_speed(RotaryEncoder *encoder)
+{
+    encoder->tick();
+    int speed_rad_s = encoder->getRPM() * 2 * 3.14f / 60;
+    return speed_rad_s;
 }

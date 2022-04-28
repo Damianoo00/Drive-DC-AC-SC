@@ -1,5 +1,5 @@
 SPEED_REF = False
-SPEED_SENSOR = False
-CURR_REF = True
-CURR_SENSOR = True
+SPEED_SENSOR = True
+CURR_REF = False
+CURR_SENSOR = False
 CTR_SIG = False
