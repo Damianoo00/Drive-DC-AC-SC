@@ -7,8 +7,9 @@ void PWM_begin(int pin)
     pinMode(pin, OUTPUT);
 }
 
-void PWM_write(int pin, int duty)
-/* Genarate PWM with set duty and output it on pin */
+void PWM_write(int pin, float duty)
+/* Genarate PWM with set duty (0 - 1) and output it on pin */
 {
-    analogWrite(pin, duty);
+    static int AnalogDuty = duty * 255;
+    analogWrite(pin, AnalogDuty);
 }

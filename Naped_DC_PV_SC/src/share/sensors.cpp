@@ -1,17 +1,16 @@
 #include "../include/sensors.h"
 #include <Arduino.h>
 int read_current(int pin, int resistance)
-/* read current value [mA] "Shut method"
+/* read current value [mA] "Shut method", resistance in mOhm
 Args:
     pin - pin adress
-    resistance - shunt resistance
+    resistance - shunt resistance [mOhm]
  */
 {
     int analog_output = analogRead(pin);
 
     const int AmperToMiliamper = 1000;
-    const float AdcToVolt = 3.3f / 255.0f;
+    const int AdcToMilivolt = 5000 / 255;
 
-    return analog_output *
-           AmperToMiliamper * AdcToVolt / resistance;
+    return AmperToMiliamper * analog_output * AdcToMilivolt / resistance;
 }

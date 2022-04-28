@@ -27,7 +27,7 @@ const int8_t min_i = -1;
 struct PICTRL PIctrl_curr;
 static int curr_sensor = 0;
 
-/* REF speed value */
+/* REF current value [mA] */
 const int current_ref = 105;
 
 void setup()
@@ -53,7 +53,7 @@ void loop()
 #ifdef SET_CURR
   curr_sensor = uart_recive();
 #endif
-  CalcPIctrl(&PIctrl_curr, current_ref - curr_sensor);
+  CalcPIctrl(&PIctrl_curr, (current_ref - curr_sensor) / 1000); // mA to Ampery
 
   PWM_write(PWM1_port, PIctrl_curr.y);
   PWM_write(PWM2_port, -PIctrl_curr.y);
