@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <string.h>
+#include <stdio.h>
 
 void uart_begin(long baundrate, int timeout)
 /* set baudrate and timeout for UART */
@@ -17,6 +18,11 @@ int uart_recive()
         /* waiting for mess */
     }
     return Serial.readString().toInt();
+}
+void uart_recive_2_params(int *speed, int *curr)
+/* wait for message and save 2 int variables  */
+{
+    /* TO DO */
 }
 
 void uart_transmit(int val)
