@@ -17,6 +17,7 @@ Args:
 }
 
 int get_speed(RotaryEncoder *encoder)
+/* get speed value from encoder in rad/s */
 {
     encoder->tick();
     int speed_rad_s = encoder->getRPM() * 2 * 3.14f / 60;
