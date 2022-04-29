@@ -5,5 +5,6 @@
 
 int read_current(int, int);
 int get_speed(RotaryEncoder *);
+int get_voltage(int);
 
 #endif

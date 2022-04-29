@@ -2,6 +2,6 @@
 #define PWM_LIB_H
 
 void PWM_begin(int);
-void PWM_write(int, float);
+void PWM_write(int, int);
 
 #endif

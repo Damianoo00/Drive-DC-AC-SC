@@ -7,9 +7,11 @@ void PWM_begin(int pin)
     pinMode(pin, OUTPUT);
 }
 
-void PWM_write(int pin, float duty)
-/* Genarate PWM with set duty (0 - 1) and output it on pin */
+void PWM_write(int pin, int duty)
+/* Genarate PWM with set duty (0 - 100) and output (0-5V) on pin */
 {
-    static int AnalogDuty = duty * 255;
+    constexpr int DacResolution = 255;
+    constexpr int ProcToPerUnit = 100;
+    static int AnalogDuty = duty * DacResolution / ProcToPerUnit;
     analogWrite(pin, AnalogDuty);
 }

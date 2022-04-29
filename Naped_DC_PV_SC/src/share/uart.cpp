@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <string.h>
 #include <stdio.h>
+#include "../../include/uart.h"
 
 void uart_begin(long baundrate, int timeout)
 /* set baudrate and timeout for UART */
@@ -32,10 +33,12 @@ void uart_transmit(int val)
     Serial.println(val);
 }
 
-void log_uart(unsigned long CLK, int speed_ref, int speed_sensor, int curr_ref, int curr_sensor, int ctr_sig)
-/* log CLK,speed_ref,speed_sensor,curr_ref,curr_sensor,ctr_sig\n on UART */
+void log_uart(unsigned long CLK, int pv_voltage, int speed_ref, int speed_sensor, int curr_ref, int curr_sensor, int ctr_sig)
+/* log CLK,pv_voltage,speed_ref,speed_sensor,curr_ref,curr_sensor,ctr_sig\n on UART */
 {
     Serial.print(CLK);
+    Serial.print(",");
+    Serial.print(pv_voltage);
     Serial.print(",");
     Serial.print(speed_ref);
     Serial.print(",");
