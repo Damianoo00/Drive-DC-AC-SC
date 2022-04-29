@@ -5,7 +5,6 @@
 #include <RotaryEncoder.h>
 #include <Wire.h>
 
-#define LOG
 #define WORK
 
 /***** POUT *****/
@@ -17,7 +16,7 @@
 #define TIMEOUT 10
 
 /*** I2C params ***/
-#define I2C_NODE_ADRESS 1
+#define I2C_NODE_ADRESS 8
 
 static int speed_sensor = 0;
 
@@ -35,7 +34,7 @@ void loop()
   speed_sensor = get_speed(&encoder);
 
 #ifdef WORK
-  i2c_listen_and_send(speed_sensor);
+  update_message(100);
 #endif
 
 #ifdef LOG

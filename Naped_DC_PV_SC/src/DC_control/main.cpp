@@ -4,10 +4,9 @@
 #include "../include/uart.h"
 #include "../include/i2c.h"
 #include <Arduino.h>
-#include <stdint.h>
 
 #define LOG
-#define SET_CURR
+#define WORK
 
 /***** POUT *****/
 #define PWM1_port 11
@@ -17,6 +16,9 @@
 /*** UART params***/
 #define BAUD 115200
 #define TIMEOUT 10
+
+/*** I2C slave id ***/
+#define ENCODER_ID 8
 
 /*** REG I params ***/
 const float Ts = 10e3;
@@ -48,7 +50,6 @@ void setup()
   PWM_begin(PWM1_port);
   PWM_begin(PWM2_port);
 
-  InitPIctrl(&PIctrl_curr, Ts, Kr_i, Tr_i, max_v, min_v);
   InitPIctrl(&PIctrl_speed, Ts, Kr_v, Tr_v, max_v, min_v);
   InitPIctrl(&PIctrl_curr, Ts, Kr_i, Tr_i, max_i, min_i);
 }
@@ -58,7 +59,7 @@ void loop()
 
 #ifdef WORK
   curr_sensor = read_current(CURR_PORT, 1);
-  speed_sensor = i2cReadFromSlave();
+  speed_sensor = i2c_get_value_from_slave(ENCODER_ID, 4);
 #endif
 
 #ifdef SET_CURR
