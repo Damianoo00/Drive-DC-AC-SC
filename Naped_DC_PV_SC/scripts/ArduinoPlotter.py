@@ -42,7 +42,7 @@ if __name__ == "__main__":
 
         # header of values saved in logger file
         log.logger_params(
-            "CLK,speed_ref,speed_sensor,curr_ref,curr_sensor,ctr_sig", args.log_file)
+            "CLK,pv_voltage,speed_ref,speed_sensor,curr_ref,curr_sensor,ctr_sig", args.log_file)
 
         if args.send:
             # Send data and plot board recive on it

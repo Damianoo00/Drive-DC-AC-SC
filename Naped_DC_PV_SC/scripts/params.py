@@ -1,5 +1,6 @@
+PV_VOLTAGE = True
 SPEED_REF = False
-SPEED_SENSOR = True
+SPEED_SENSOR = False
 CURR_REF = False
 CURR_SENSOR = False
 CTR_SIG = False

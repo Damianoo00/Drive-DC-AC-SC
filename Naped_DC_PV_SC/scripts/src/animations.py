@@ -16,13 +16,14 @@ def get_params_from_serial_device(serial_device: serial.Serial, log_file: str):
 
     line_as_list = line.split(b',')
     time = int(line_as_list[0])
-    speed_ref = int(line_as_list[1].split(b'\n')[0])
-    speed_sensor = int(line_as_list[2].split(b'\n')[0])
-    curr_ref = int(line_as_list[3].split(b'\n')[0])
-    curr_sensor = int(line_as_list[4].split(b'\n')[0])
-    control_signal = int(line_as_list[5].split(b'\n')[0])
+    pv_voltage = int(line_as_list[1].split(b'\n')[0])
+    speed_ref = int(line_as_list[2].split(b'\n')[0])
+    speed_sensor = int(line_as_list[3].split(b'\n')[0])
+    curr_ref = int(line_as_list[4].split(b'\n')[0])
+    curr_sensor = int(line_as_list[5].split(b'\n')[0])
+    control_signal = int(line_as_list[6].split(b'\n')[0])
 
-    return time, speed_ref, speed_sensor, curr_ref, curr_sensor, control_signal
+    return time, pv_voltage, speed_ref, speed_sensor, curr_ref, curr_sensor, control_signal
 
 
 def send_n_get_params_from_serial_device(value, serial_device: serial.Serial, log_file: str):
@@ -39,32 +40,36 @@ def send_n_get_params_from_serial_device(value, serial_device: serial.Serial, lo
 
         line_as_list = line.split(b',')
         time = int(line_as_list[0])
-        speed_ref = int(line_as_list[1].split(b'\n')[0])
-        speed_sensor = int(line_as_list[2].split(b'\n')[0])
-        curr_ref = int(line_as_list[3].split(b'\n')[0])
-        curr_sensor = int(line_as_list[4].split(b'\n')[0])
-        control_signal = int(line_as_list[5].split(b'\n')[0])
+        pv_voltage = int(line_as_list[1].split(b'\n')[0])
+        speed_ref = int(line_as_list[2].split(b'\n')[0])
+        speed_sensor = int(line_as_list[3].split(b'\n')[0])
+        curr_ref = int(line_as_list[4].split(b'\n')[0])
+        curr_sensor = int(line_as_list[5].split(b'\n')[0])
+        control_signal = int(line_as_list[6].split(b'\n')[0])
 
-        return time, speed_ref, speed_sensor, curr_ref, curr_sensor, control_signal
-    return 0, 0, 0, 0, 0, 0
+        return time,pv_voltage, speed_ref, speed_sensor, curr_ref, curr_sensor, control_signal
+    return 0, 0, 0, 0, 0, 0, 0
 
 
-def send_n_get_animate(i, log_file: str, data_to_send: str, time: int, speed_ref: int, speed_sensor: int, curr_ref: int, curr_sensor: int, control_signal: int, axes, serial_device: serial.Serial):
+def send_n_get_animate(i, log_file: str, data_to_send: str, time: int, pv_voltage: int, speed_ref: int, speed_sensor: int, curr_ref: int, curr_sensor: int, control_signal: int, axes, serial_device: serial.Serial):
     """ animate plot function for send&get mode"""
 
     if (i > data_to_send.size):
         exit()
 
-    time_v, speed_ref_v, speed_sensor_v, curr_ref_v, curr_sensor_v, control_signal_v = send_n_get_params_from_serial_device(
+    time_v, pv_voltage_v, speed_ref_v, speed_sensor_v, curr_ref_v, curr_sensor_v, control_signal_v = send_n_get_params_from_serial_device(
         data_to_send[i], serial_device, log_file)
 
     time.append(time_v)
+    pv_voltage.append(pv_voltage_v)
     speed_ref.append(speed_ref_v)
     speed_sensor.append(speed_sensor_v)
     curr_ref.append(curr_ref_v)
     curr_sensor.append(curr_sensor_v)
     control_signal.append(control_signal_v)
 
+    if params.PV_VOLTAGE:
+        axes.plot(time, pv_voltage, label="PV Voltage")
     if params.SPEED_REF:
         axes.plot(time, speed_ref, label="Speed ref")
     if params.SPEED_SENSOR:
@@ -77,18 +82,21 @@ def send_n_get_animate(i, log_file: str, data_to_send: str, time: int, speed_ref
         axes.plot(time, control_signal, label="Control signal")
 
 
-def get_animate(i, log_file: str, time: int, speed_ref: int, speed_sensor: int, curr_ref: int, curr_sensor: int, control_signal: int, axes, serial_device: serial.Serial):
+def get_animate(i, log_file: str, time: int, pv_voltage: str, speed_ref: int, speed_sensor: int, curr_ref: int, curr_sensor: int, control_signal: int, axes, serial_device: serial.Serial):
     """ animate plot function for get mode """
 
-    time_v, speed_ref_v, speed_sensor_v, curr_ref_v, curr_sensor_v, control_signal_v = get_params_from_serial_device(
+    time_v, pv_voltage_v, speed_ref_v, speed_sensor_v, curr_ref_v, curr_sensor_v, control_signal_v = get_params_from_serial_device(
         serial_device, log_file)
     time.append(time_v)
+    pv_voltage.append(pv_voltage_v)
     speed_ref.append(speed_ref_v)
     speed_sensor.append(speed_sensor_v)
     curr_ref.append(curr_ref_v)
     curr_sensor.append(curr_sensor_v)
     control_signal.append(control_signal_v)
 
+    if params.PV_VOLTAGE:
+        axes.plot(time, pv_voltage, label="PV Voltage")
     if params.SPEED_REF:
         axes.plot(time, speed_ref, label="Speed ref")
     if params.SPEED_SENSOR:
