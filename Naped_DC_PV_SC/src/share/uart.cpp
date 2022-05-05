@@ -1,12 +1,12 @@
 #include <Arduino.h>
 #include <string.h>
 #include <stdio.h>
-#include "../../include/uart.h"
+
+volatile int IF_HEADER_SEND = 0;
 
 void uart_begin(long baundrate, int timeout)
 /* set baudrate and timeout for UART */
 {
-
     Serial.begin(baundrate);
     Serial.setTimeout(timeout);
 }
@@ -20,10 +20,19 @@ int uart_recive()
     }
     return Serial.readString().toInt();
 }
-void uart_recive_2_params(int *speed, int *curr)
+void uart_recive_2_params(int *curr, int *speed)
 /* wait for message and save 2 int variables  */
 {
-    /* TO DO */
+    while (!Serial.available())
+    {
+        /* waiting for mess */
+    }
+    *curr = Serial.readString().toInt();
+    while (!Serial.available())
+    {
+        /* waiting for mess */
+    }
+    *speed = Serial.readString().toInt();
 }
 
 void uart_transmit(int val)
@@ -33,21 +42,32 @@ void uart_transmit(int val)
     Serial.println(val);
 }
 
-void log_uart(unsigned long CLK, int pv_voltage, int speed_ref, int speed_sensor, int curr_ref, int curr_sensor, int ctr_sig)
-/* log CLK,pv_voltage,speed_ref,speed_sensor,curr_ref,curr_sensor,ctr_sig\n on UART */
+void log_uart(String header, const long *list_of_log_params, const int num_of_params)
+/* log data from queue in csv format */
 {
-    Serial.print(CLK);
-    Serial.print(",");
-    Serial.print(pv_voltage);
-    Serial.print(",");
-    Serial.print(speed_ref);
-    Serial.print(",");
-    Serial.print(speed_sensor);
-    Serial.print(",");
-    Serial.print(curr_ref);
-    Serial.print(",");
-    Serial.print(curr_sensor);
-    Serial.print(",");
-    Serial.print(ctr_sig);
-    Serial.print("\n");
+    if (IF_HEADER_SEND)
+    {
+        for (int i = 0; i < num_of_params; i++)
+        {
+            if (i > 0)
+            {
+                Serial.print(",");
+            }
+
+            Serial.print(list_of_log_params[i]);
+        }
+        Serial.print("\n");
+    }
+    else
+    {
+        if (Serial.available())
+        {
+            if (Serial.read() == '?')
+            {
+                Serial.print(header);
+                Serial.print('/n');
+                IF_HEADER_SEND = 1;
+            }
+        }
+    }
 }
