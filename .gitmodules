@@ -1,0 +1,3 @@
+[submodule "Naped_DC_PV_SC/src/ENC_Interface"]
+	path = Naped_DC_PV_SC/src/ENC_Interface
+	url = https://github.com/Damianoo00/ENC_Interface.git
