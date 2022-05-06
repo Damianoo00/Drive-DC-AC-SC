@@ -80,7 +80,7 @@
             }
         },
         {
-            "label": "Submodules: activate PV_CTR_CTR",
+            "label": "Submodules: activate PV_CTR",
             "type": "shell",
             "command": "./Naped_DC_PV_SC/scripts/ArduinoPlotter.py",
             "windows": {
