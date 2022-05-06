@@ -19,6 +19,7 @@ def log_data(line: str, log_file: str):
         flog.write(str(line)[2:-3] + '\n')
 
 def get_paramlist(log_file: str) -> list:
+    """ read list of parameters from log header """
     list_of_params = []
     with open(log_file, 'r') as fheader:
             params = fheader.readline()[:-1].split(',')

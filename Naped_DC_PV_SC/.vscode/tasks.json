@@ -130,6 +130,19 @@
                 "reveal": "always",
                 "panel": "shared"
             }
+        },
+        {
+            "label": "Simulator: Simulate PV by DC supply",
+            "type": "shell",
+            "command": "./Naped_DC_PV_SC/scripts/PV_Sim.py",
+            "windows": {
+                "command": "python .\\scripts\\PV_Sim.py"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
         }
     ]
 }
