@@ -8,15 +8,15 @@ Układ sterowania napędu zasilanego z ogniwa PV wspomaganego ultra-kondensatoro
 ```
 >git clone https://gitlab.com/pbl-b-emob/naped_dc-pv-sc.git
 
->git add remote origin https://gitlab.com/pbl-b-emob/naped_dc-pv-sc.git
-
 >cd [cloned_repo]
 
->git branch -M [branch_name]
+>git branch [new_branch_name]
+
+>git checkout [new_branch_name]
 
 >git commit -M "[txt of commit]"
 
->git push origin [branch_name]
+>git push origin [new_branch_name]
 ```
 
 ## Modele PLECS
@@ -69,15 +69,17 @@ src_filter = -<*> +<[project_name]/> +<share/>
 
 # Tests
 To test correct working of program we will use program *scripts/ArduinoPlotter.py*
-This programm allow to plot:
-- speed_ref
-- speed_sensor
-- curr_ref
-- curr_sensor
-To test of Analog inputs, Comunication protocols and writing code.
-
+This programm allow to plot any values logged by Arduino.
 
 Please visit code documentation 
 
 [ArduinoPlotter documentation](Naped_DC_PV_SC/scripts/README.md)
 ---
+
+# Project Quick Start
+1. Open *Drive-DC-AC-SC\Naped_DC_PV_SC* directory in VS Code
+2. Clear *Drive-DC-AC-SC\Naped_DC_PV_SC/platformio.ini* by running Task (ctrl+alt+T -> Submodule: clear all)
+3. Activate any submodule (ctrl+alt+T -> Submodule: ...)
+4. Build project (ctr+alt+P -> PlatformIO: Build)
+5. Upload project (ctrl+alt+P -> PlatformIO: Upload)
+6. Test Program by Plotter (ctrl+alt+T -> Plotter: ...) 
