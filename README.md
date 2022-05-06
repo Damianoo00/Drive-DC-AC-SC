@@ -1,12 +1,12 @@
 # Naped_DC-PV-SC
 
-Układ sterowania napędu zasilanego z ogniwa PV wspomaganego ultra-kondensatorowym magazynem energii
+Drive control system powered by a PV cell supported by an ultra-capacitor energy storage
 
 
 ## Git quck quide
 
 ```
->git clone https://gitlab.com/pbl-b-emob/naped_dc-pv-sc.git
+>git clone https://github.com/Damianoo00/Drive-DC-AC-SC.git
 
 >cd [cloned_repo]
 
@@ -19,7 +19,7 @@ Układ sterowania napędu zasilanego z ogniwa PV wspomaganego ultra-kondensatoro
 >git push origin [new_branch_name]
 ```
 
-## Modele PLECS
+## PLECS Simulations Models
 
 [![](https://home.pl/img/cms/52fee4fe-3be5-48a2-8ee9-350d87247d1a/ms-onedrive-logo-og.png?version=0)](https://wutwaw-my.sharepoint.com/:f:/g/personal/01153009_pw_edu_pl/EtXvPZOxE1lCrET0B_qHf2kBk5IGChMz1utTAB-Jy4QKlA?e=LUxeyB)
 
