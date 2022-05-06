@@ -60,14 +60,15 @@ void log_uart(String header, const long *list_of_log_params, const int num_of_pa
     }
     else
     {
-        if (Serial.available())
+        while (!Serial.available())
         {
-            if (Serial.read() == '?')
-            {
-                Serial.print(header);
-                Serial.print('/n');
-                IF_HEADER_SEND = 1;
-            }
+            // wait for message
+        }
+        if (Serial.read() == '?')
+        {
+            Serial.print(header);
+            Serial.print('\n');
+            IF_HEADER_SEND = 1;
         }
     }
 }

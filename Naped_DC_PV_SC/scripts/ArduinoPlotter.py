@@ -1,9 +1,12 @@
 """ Tool to plot values sended from board working as DC controller """
 
 import serial
+import time
 import src.plot_mode as plot_mode
 import src.log as log
 import argparse
+from src.log_data import LogData
+import pandas as pd
 
 # Termial params
 parser = argparse.ArgumentParser(
@@ -17,7 +20,7 @@ parser.add_argument('--send_data', default="../data/data.csv",
                         [default=../data/data.csv]")
 parser.add_argument('--log_file', default="../data/log.txt",
                     help="Set path to log file [default=../data/log.txt]")
-parser.add_argument('--column', default="curr_sensor",
+parser.add_argument('--column', default="Current,Speed",
                     help="Choose column from datafile, which will send to device [default=curr_sensor]")
 parser.add_argument('--port', default='COM3',
                     help="Set port of board [default=COM3]")
@@ -39,20 +42,32 @@ if __name__ == "__main__":
         arduino.baudrate = args.baudrate
         arduino.timeout = args.timeout
         arduino.open()
+        time.sleep(1.64)
 
         # header of values saved in logger file
-        log.logger_params(
-            "CLK,pv_voltage,speed_ref,speed_sensor,curr_ref,curr_sensor,ctr_sig", args.log_file)
+        log.get_logger_header(
+            arduino, args.log_file)
+
+
+        log_data = log.get_paramlist(args.log_file)
 
         if args.send:
             # Send data and plot board recive on it
+
+            send_data = pd.DataFrame()
+            columns = args.column.split(",")
+            for column in columns:
+                send_data[column] = pd.read_csv(args.send_data)[column]
+            
             plot_mode.SendPlotSerial(
-                args.send_data, args.column, arduino, args.log_file)
+                send_data, arduino, args.log_file, log_data)
         else:
             # Only plot live recived data
-            plot_mode.PlotSerial(arduino, args.log_file)
+            plot_mode.PlotSerial(arduino, args.log_file, log_data)
 
         arduino.close()
     else:
         # Plot data saved in log file
-        plot_mode.PlotLogs(args.log_file)
+        log_data = log.get_paramlist(args.log_file)
+
+        plot_mode.PlotLogs(args.log_file, log_data)

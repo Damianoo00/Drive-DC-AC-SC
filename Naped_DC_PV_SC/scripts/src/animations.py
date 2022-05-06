@@ -1,12 +1,13 @@
 import serial
 from time import sleep
 import src.log as log
-import params
+import pandas as pd
 
 
-def get_params_from_serial_device(serial_device: serial.Serial, log_file: str):
+def get_params_from_serial_device(serial_device: serial.Serial, log_file: str, num_of_params: int) -> list:
     """ read data from UART and print&plot it if response not empty """
 
+    list_of_values = []
     line = b''
     while (line == b''):
         line = serial_device.readline()  # ascii
@@ -15,95 +16,64 @@ def get_params_from_serial_device(serial_device: serial.Serial, log_file: str):
     log.log_data(line, log_file)
 
     line_as_list = line.split(b',')
-    time = int(line_as_list[0])
-    pv_voltage = int(line_as_list[1].split(b'\n')[0])
-    speed_ref = int(line_as_list[2].split(b'\n')[0])
-    speed_sensor = int(line_as_list[3].split(b'\n')[0])
-    curr_ref = int(line_as_list[4].split(b'\n')[0])
-    curr_sensor = int(line_as_list[5].split(b'\n')[0])
-    control_signal = int(line_as_list[6].split(b'\n')[0])
 
-    return time, pv_voltage, speed_ref, speed_sensor, curr_ref, curr_sensor, control_signal
+    list_of_values.append(int(line_as_list[0]))
+    for i in range(num_of_params - 1):
+        list_of_values.append(int(line_as_list[i+1].split(b'\n')[0]))
+
+    return list_of_values
 
 
-def send_n_get_params_from_serial_device(value, serial_device: serial.Serial, log_file: str):
+def send_n_get_params_from_serial_device(values: pd.DataFrame, serial_device: serial.Serial, log_file: str, num_of_params: int) -> list:
     """ after sending data read from UART and print&plot it if response not empty """
 
-    print(int(value))
-    serial_device.write(bytes(str(int(value)) + '\n', 'utf-8'))
-    sleep(0.05)
+    list_of_values = []
+    #print(values)
+    for value in values.values.tolist()[0]:
+        print(value)
+        serial_device.write(bytes(str(int(value)) + '\n', 'utf-8'))
+        sleep(0.05)
 
     line = serial_device.readline()  # ascii
+    print(line)
     if line != b'':
         print(line)
         log.log_data(line, log_file)
 
         line_as_list = line.split(b',')
-        time = int(line_as_list[0])
-        pv_voltage = int(line_as_list[1].split(b'\n')[0])
-        speed_ref = int(line_as_list[2].split(b'\n')[0])
-        speed_sensor = int(line_as_list[3].split(b'\n')[0])
-        curr_ref = int(line_as_list[4].split(b'\n')[0])
-        curr_sensor = int(line_as_list[5].split(b'\n')[0])
-        control_signal = int(line_as_list[6].split(b'\n')[0])
 
-        return time,pv_voltage, speed_ref, speed_sensor, curr_ref, curr_sensor, control_signal
-    return 0, 0, 0, 0, 0, 0, 0
+        list_of_values.append(int(line_as_list[0]))
+        for i in range(num_of_params - 1):
+            list_of_values.append(int(line_as_list[i+1].split(b'\n')[0]))
+
+        return list_of_values
+    return list_of_values
 
 
-def send_n_get_animate(i, log_file: str, data_to_send: str, time: int, pv_voltage: int, speed_ref: int, speed_sensor: int, curr_ref: int, curr_sensor: int, control_signal: int, axes, serial_device: serial.Serial):
+def send_n_get_animate(i, log_file: str, data_to_send: pd.DataFrame, log_data: tuple, axes, serial_device: serial.Serial):
     """ animate plot function for send&get mode"""
 
-    if (i > data_to_send.size):
-        exit()
 
-    time_v, pv_voltage_v, speed_ref_v, speed_sensor_v, curr_ref_v, curr_sensor_v, control_signal_v = send_n_get_params_from_serial_device(
-        data_to_send[i], serial_device, log_file)
+    list_of_values = send_n_get_params_from_serial_device(
+        data_to_send.loc[data_to_send.index == i], serial_device, log_file, len(log_data))
 
-    time.append(time_v)
-    pv_voltage.append(pv_voltage_v)
-    speed_ref.append(speed_ref_v)
-    speed_sensor.append(speed_sensor_v)
-    curr_ref.append(curr_ref_v)
-    curr_sensor.append(curr_sensor_v)
-    control_signal.append(control_signal_v)
+    if (len(list_of_values) > 0):
+        for i in range(len(log_data)):
+            log_data[i].values.append(list_of_values[i])
 
-    if params.PV_VOLTAGE:
-        axes.plot(time, pv_voltage, label="PV Voltage")
-    if params.SPEED_REF:
-        axes.plot(time, speed_ref, label="Speed ref")
-    if params.SPEED_SENSOR:
-        axes.plot(time, speed_sensor, label="Speed sensor")
-    if params.CURR_REF:
-        axes.plot(time, curr_ref, label="Current ref")
-    if params.CURR_SENSOR:
-        axes.plot(time, curr_sensor, label="Current sensor")
-    if params.CTR_SIG:
-        axes.plot(time, control_signal, label="Control signal")
+    for i in range(len(log_data) - 1):
+        if log_data[i+1].visible:
+            axes.plot(log_data[0].values, log_data[i+1].values, label=log_data[i+1].label)
 
 
-def get_animate(i, log_file: str, time: int, pv_voltage: str, speed_ref: int, speed_sensor: int, curr_ref: int, curr_sensor: int, control_signal: int, axes, serial_device: serial.Serial):
+def get_animate(i, log_file: str,log_data: tuple, axes, serial_device: serial.Serial):
     """ animate plot function for get mode """
 
-    time_v, pv_voltage_v, speed_ref_v, speed_sensor_v, curr_ref_v, curr_sensor_v, control_signal_v = get_params_from_serial_device(
-        serial_device, log_file)
-    time.append(time_v)
-    pv_voltage.append(pv_voltage_v)
-    speed_ref.append(speed_ref_v)
-    speed_sensor.append(speed_sensor_v)
-    curr_ref.append(curr_ref_v)
-    curr_sensor.append(curr_sensor_v)
-    control_signal.append(control_signal_v)
+    list_of_values = get_params_from_serial_device(
+        serial_device, log_file, len(log_data))
+    for i in range(len(log_data)):
+        log_data[i].values.append(list_of_values[i])
 
-    if params.PV_VOLTAGE:
-        axes.plot(time, pv_voltage, label="PV Voltage")
-    if params.SPEED_REF:
-        axes.plot(time, speed_ref, label="Speed ref")
-    if params.SPEED_SENSOR:
-        axes.plot(time, speed_sensor, label="Speed sensor")
-    if params.CURR_REF:
-        axes.plot(time, curr_ref, label="Current ref")
-    if params.CURR_SENSOR:
-        axes.plot(time, curr_sensor, label="Current sensor")
-    if params.CTR_SIG:
-        axes.plot(time, control_signal, label="Control signal")
+    for i in range(len(log_data) - 1):
+        if log_data[i+1].visible:
+            axes.plot(log_data[0].values, log_data[i+1].values, label=log_data[i+1].label)
