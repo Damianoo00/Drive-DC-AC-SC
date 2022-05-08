@@ -22,7 +22,8 @@ def activate_submodule(submodule: str, board: str, uart_baudrate: str) -> None:
             framework = arduino\n\
             src_filter = -<*> +<{submodule}/> +<share/>\n\
             lib_deps = mathertel/RotaryEncoder@^1.5.2\n\
-            monitor_speed = {uart_baudrate}\n"
+            monitor_speed = {uart_baudrate}\n\
+            debug_tool = avr-stub\n"
         )
 
 
