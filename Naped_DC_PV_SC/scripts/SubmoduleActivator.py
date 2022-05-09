@@ -9,10 +9,16 @@ def clear_project() -> None:
     # clear platforio.ini file
     open("platformio.ini", 'w').close()
 
-def activate_submodule(submodule: str, board: str, uart_baudrate: str) -> None:
+def activate_submodule(submodule: str, board: str, uart_baudrate: str, debug_mode: bool) -> None:
     """ Init and update git submodule and add necessery lines to platformio.ini file """
     command = f"git submodule update --init src\{submodule}"
     os.system(command)
+
+    rm_confilcted_src_files = ""
+    
+    if debug_mode:
+        rm_confilcted_src_files = "-<share/uart.cpp>"
+
 
     with open("platformio.ini", 'a') as fappend:
         fappend.write(
@@ -20,10 +26,11 @@ def activate_submodule(submodule: str, board: str, uart_baudrate: str) -> None:
             platform = atmelavr\n\
             board = {board}\n\
             framework = arduino\n\
-            src_filter = -<*> +<{submodule}/> +<share/>\n\
+            src_filter = -<*> +<{submodule}/> +<share/> {rm_confilcted_src_files}\n\
             lib_deps = mathertel/RotaryEncoder@^1.5.2\n\
             monitor_speed = {uart_baudrate}\n\
-            debug_tool = avr-stub\n"
+            debug_tool = avr-stub\n\
+            debug_port = COM3\n"
         )
 
 
@@ -39,6 +46,8 @@ parser.add_argument('--board', default="uno",
                     help="Set arduino board [default=uno]")
 parser.add_argument('--uart_baudrate', default="115200",
                     help="Set uart baudrate for board [default=115200]")
+parser.add_argument('-debug', action='store_true', default=False,
+                    help="rm conflicted uart.cpp src file")
 
 
 if __name__ == "__main__":
@@ -47,4 +56,4 @@ if __name__ == "__main__":
     if args.clear:
         clear_project()
     if args.activate:
-        activate_submodule(args.submodule, args.board, args.uart_baudrate)
+        activate_submodule(args.submodule, args.board, args.uart_baudrate, args.debug)

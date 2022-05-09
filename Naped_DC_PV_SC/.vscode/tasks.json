@@ -143,6 +143,84 @@
                 "reveal": "always",
                 "panel": "shared"
             }
-        }
+        },
+        {
+            "label": "Submodules: activate DC_CURR_CTR [debug]",
+            "type": "shell",
+            "command": "./Naped_DC_PV_SC/scripts/ArduinoPlotter.py",
+            "windows": {
+                "command": "python .\\scripts\\SubmoduleActivator.py -activate --submodule=DC_CURR_CTR -debug"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Submodules: activate DC_SPEED_CTR [debug]",
+            "type": "shell",
+            "command": "./Naped_DC_PV_SC/scripts/ArduinoPlotter.py",
+            "windows": {
+                "command": "python .\\scripts\\SubmoduleActivator.py -activate --submodule=DC_SPEED_CTR -debug"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Submodules: activate PV_CTR [debug]",
+            "type": "shell",
+            "command": "./Naped_DC_PV_SC/scripts/ArduinoPlotter.py",
+            "windows": {
+                "command": "python .\\scripts\\SubmoduleActivator.py -activate --submodule=PV_CTR -debug"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Submodules: activate SC_CTR [debug]",
+            "type": "shell",
+            "command": "./Naped_DC_PV_SC/scripts/ArduinoPlotter.py",
+            "windows": {
+                "command": "python .\\scripts\\SubmoduleActivator.py -activate --submodule=SC_CTR -debug"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Submodules: activate SYSTEM_CTR [debug]",
+            "type": "shell",
+            "command": "./Naped_DC_PV_SC/scripts/ArduinoPlotter.py",
+            "windows": {
+                "command": "python .\\scripts\\SubmoduleActivator.py -activate --submodule=SYSTEM_CTR -debug"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Submodules: activate ENC_Interface [debug]",
+            "type": "shell",
+            "command": "./Naped_DC_PV_SC/scripts/ArduinoPlotter.py",
+            "windows": {
+                "command": "python .\\scripts\\SubmoduleActivator.py -activate --submodule=ENC_Interface debug"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
     ]
 }
