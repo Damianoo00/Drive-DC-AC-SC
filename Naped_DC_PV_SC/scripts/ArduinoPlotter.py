@@ -71,3 +71,4 @@ if __name__ == "__main__":
         log_data = log.get_paramlist(args.log_file)
 
         plot_mode.PlotLogs(args.log_file, log_data)
+

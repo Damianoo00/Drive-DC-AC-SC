@@ -25,12 +25,12 @@ int get_speed(RotaryEncoder *encoder)
     return speed_rad_s;
 }
 
-int get_voltage(int pin)
+int get_voltage(int raw_adc)
 /* return voltage value [mV] */
 {
-    const int VoltToMilivolt = 1000;
-    const int MaxVolt = 5;
-    const int AdcResolution = 1024;
+    constexpr int VoltToMilivolt = 1000;
+    constexpr int MaxVolt = 5;
+    constexpr int AdcResolution = 1024;
 
-    return analogRead(pin) * MaxVolt * VoltToMilivolt / AdcResolution;
+    return raw_adc * MaxVolt * VoltToMilivolt / AdcResolution;
 }
