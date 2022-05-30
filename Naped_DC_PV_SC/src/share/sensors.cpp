@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #include <RotaryEncoder.h>
 
-int read_current(int pin, int resistance)
+long read_current(int pin, int resistance)
 /* read current value [mA] "Shut method", resistance in mOhm
 Args:
     pin - pin adress
@@ -10,11 +10,15 @@ Args:
  */
 {
     int analog_output = analogRead(pin);
+    return get_current(analog_output, resistance);
+}
 
+long get_current(int raw_adc, int resistance)
+{
     const int AmperToMiliamper = 1000;
     const int AdcToMilivolt = 5000 / 255;
 
-    return AmperToMiliamper * analog_output * AdcToMilivolt / resistance;
+    return (long)raw_adc * AmperToMiliamper * AdcToMilivolt / resistance;
 }
 
 int get_speed(RotaryEncoder *encoder)
@@ -32,5 +36,5 @@ int get_voltage(int raw_adc)
     constexpr int MaxVolt = 5;
     constexpr int AdcResolution = 1024;
 
-    return raw_adc * MaxVolt * VoltToMilivolt / AdcResolution;
+    return (long)raw_adc * MaxVolt * VoltToMilivolt / AdcResolution;
 }

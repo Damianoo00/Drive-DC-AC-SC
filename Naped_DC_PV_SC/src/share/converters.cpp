@@ -7,5 +7,5 @@ Args:
     Vs[mV] - Source Voltage*/
 {
     constexpr int ToProc = 100;
-    return ToProc * Vo / (Vs + Vo);
+    return (long)ToProc * Vo / (Vs + Vo);
 }

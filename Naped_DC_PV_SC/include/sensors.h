@@ -3,8 +3,9 @@
 
 #include <RotaryEncoder.h>
 
-int read_current(int, int);
+long read_current(int, int);
 int get_speed(RotaryEncoder *);
 int get_voltage(int);
+long get_current(int, int);
 
 #endif
