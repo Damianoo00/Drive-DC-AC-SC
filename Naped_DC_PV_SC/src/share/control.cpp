@@ -1,15 +1,27 @@
+/**
+ * @file control.cpp
+ * @author Damian Płaskowicki (damian.plaskowicki.stud@pw.edu.pl)
+ * @brief Discrete PI Controller function
+ * @version 0.1
+ * @date 2022-05-31
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #include "../include/control.h"
 
+/**
+ * @brief Initialize struct of PI controller
+ *
+ * @param pictrl pointer to PICTRL struct
+ * @param Ts sample time
+ * @param Kr amplification of regulator
+ * @param Ti Time constant of regulator
+ * @param max max saturation limit
+ * @param min min saturation limit
+ */
 void InitPIctrl(struct PICTRL *pictrl, int Ts, float Kr, float Ti, int max,
                 int min)
-/*Initialize struct of PI controller
-  Args:
-          Ts - Sample time
-          Kr - amplification of regulator
-          Ti - time constant of regulator
-          max - max saturation limit
-          min - min saturation limit
-  */
 {
   pictrl->x = 0.0;
   pictrl->y = 0.0;
@@ -31,13 +43,14 @@ void InitPIctrl(struct PICTRL *pictrl, int Ts, float Kr, float Ti, int max,
   pictrl->min = min;
 }
 
-void CalcPIctrl(struct PICTRL *pictrl, float x)
-/*Calc output of PI controller and return on [struct].y
-  Args:
-    x - input of PI controller block
-   */
+/**
+ * @brief Calculate output of PI controller and return on [struct].y
+ *
+ * @param input input of PI Controller
+ */
+void CalcPIctrl(struct PICTRL *pictrl, float input)
 {
-  pictrl->x = x;
+  pictrl->x = input;
   pictrl->a = pictrl->Kr * pictrl->x;
 
   if (pictrl->f_1 == 0)

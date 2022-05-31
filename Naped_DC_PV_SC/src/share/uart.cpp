@@ -1,18 +1,41 @@
+/**
+ * @file uart.cpp
+ * @author Damian Płaskowicki (damian.plaskowicki.stud@pw.edu.pl)
+ * @brief Functions serviced UART comunication
+ * @version 0.1
+ * @date 2022-05-31
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #include <Arduino.h>
 #include <string.h>
 #include <stdio.h>
 
+/**
+ * @brief Check if header of logs was send at begining of logging
+ *
+ */
 volatile int IF_HEADER_SEND = 0;
 
+/**
+ * @brief Init UART communication
+ *
+ * @param baundrate set baundrate of UART comunication [Hz]
+ * @param timeout set timeout of comunication [ms]
+ */
 void uart_begin(long baundrate, int timeout)
-/* set baudrate and timeout for UART */
 {
     Serial.begin(baundrate);
     Serial.setTimeout(timeout);
 }
 
+/**
+ * @brief Wait for uart message and return as intiger when recived '\n'
+ *
+ * @return (int) recived message
+ */
 int uart_recive()
-/* wait for message and return (int) mess when recived '\n' */
 {
     while (!Serial.available())
     {
@@ -20,8 +43,14 @@ int uart_recive()
     }
     return Serial.readString().toInt();
 }
+
+/**
+ * @brief Whait for 2 messages and save as intiger values
+ *
+ * @param curr pointer to measured current value
+ * @param speed pointer to measured speed value
+ */
 void uart_recive_2_params(int *curr, int *speed)
-/* wait for message and save 2 int variables  */
 {
     while (!Serial.available())
     {
@@ -35,15 +64,25 @@ void uart_recive_2_params(int *curr, int *speed)
     *speed = Serial.readString().toInt();
 }
 
+/**
+ * @brief Transmit intiger as String ended '\n'
+ *
+ * @param val value to transmit via uart
+ */
 void uart_transmit(int val)
-/* Transmit any data as String ended '\n' */
 {
 
     Serial.println(val);
 }
 
+/**
+ * @brief Log via UART params in cvs format
+ *
+ * @param header comas separated header of parameters
+ * @param list_of_log_params list of parameters
+ * @param num_of_params number of parameters in list
+ */
 void log_uart(String header, const long *list_of_log_params, const int num_of_params)
-/* log data from queue in csv format */
 {
     if (IF_HEADER_SEND)
     {

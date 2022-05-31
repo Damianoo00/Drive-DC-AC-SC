@@ -1,3 +1,13 @@
+/**
+ * @file i2c.h
+ * @author Damian Płaskowicki (damian.plaskowicki.stud@pw.edu.pl)
+ * @brief i2c functions prototypes
+ * @version 0.1
+ * @date 2022-05-31
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #ifndef I2C_H
 #define I2C_H
 
