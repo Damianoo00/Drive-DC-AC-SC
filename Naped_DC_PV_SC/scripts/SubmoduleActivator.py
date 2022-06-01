@@ -22,18 +22,18 @@ def activate_submodule(submodule: str, board: str, uart_baudrate: str, debug_mod
         rm_confilcted_src_files = "-<share/uart.cpp>"
 
     with open("platformio.ini", 'a') as fappend:
-        fappend.write(
-            f"[env:{submodule}]\n\
+        content = f"[env:{submodule}]\n\
             platform = atmelavr\n\
             board = {board}\n\
             framework = arduino\n\
-            src_filter = -<*> +<{submodule}/> +<share/> {rm_confilcted_src_files}\n\
+            build_src_filter = -<*> +<{submodule}/> +<share/> {rm_confilcted_src_files}\n\
             test_build_src = yes\n\
             lib_deps = mathertel/RotaryEncoder@^1.5.2\n\
-            monitor_speed = {uart_baudrate}\n\
-            debug_tool = avr-stub\n\
-            debug_port = COM3\n"
-        )
+            monitor_speed = {uart_baudrate}\n"
+        if debug_mode:
+            content += "debug_tool = avr-stub\n\
+                        debug_port = COM3\n"
+        fappend.write(content)
 
 
 parser = argparse.ArgumentParser(
