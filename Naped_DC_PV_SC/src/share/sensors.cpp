@@ -18,13 +18,13 @@
  * @param pin analog input adress
  * @param resistance shut resistor resistance in mOhm
  *
- * @return (long)return currenst value in mA
+ * @return (long)return current value in mA
  *
  */
 long GetCurrent(int pin, int resistance)
 {
-    int analog_output = analogRead(pin);
-    return GetCurrent(analog_output, resistance);
+    int raw_adc = analogRead(pin);
+    return CalcCurrent(raw_adc, resistance);
 }
 
 /**
@@ -36,10 +36,11 @@ long GetCurrent(int pin, int resistance)
  */
 long CalcCurrent(int raw_adc, int resistance)
 {
-    const int AmperToMiliamper = 1000;
-    const int AdcToMilivolt = 5000 / 255;
+    constexpr int VoltToMilivolt = 1000;
+    constexpr int MaxVolt = 5;
+    constexpr int AdcResolution = 1024;
 
-    return (int32_t)raw_adc * AmperToMiliamper * AdcToMilivolt / resistance;
+    return (int32_t)raw_adc * MaxVolt * VoltToMilivolt / AdcResolution / resistance;
 }
 
 /**
@@ -69,6 +70,19 @@ int Rpm2Rads(int16_t rpm_speed)
     return (int32_t)rpm_speed * 2 * prescaledPi / min2sec / represcale;
 }
 
+/**
+ * @brief Read voltage value [mV]
+ *
+ * @param pin analog input adress
+ *
+ * @return (int) return voltage value in mV
+ *
+ */
+int GetVoltage(int pin)
+{
+    int analog_output = analogRead(pin);
+    return CalcVoltage(analog_output);
+}
 /**
  * @brief Calculate voltage value in (mV)
  *

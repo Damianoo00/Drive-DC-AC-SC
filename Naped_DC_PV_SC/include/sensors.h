@@ -16,6 +16,7 @@
 long GetCurrent(int, int);
 long CalcCurrent(int, int);
 int GetSpeed(RotaryEncoder *);
+int GetVoltage(int);
 int CalcVoltage(int);
 int Rpm2Rads(int16_t);
 

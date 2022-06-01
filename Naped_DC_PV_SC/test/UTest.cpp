@@ -14,17 +14,18 @@
 #include "../include/converters.h"
 #include "../include/PWM.h"
 
-void TestGetVoltage()
+void TestCalcVoltage()
 {
     TEST_ASSERT_EQUAL_INT(0, CalcVoltage(0)); // min voltage
     TEST_ASSERT_EQUAL_INT(2441, CalcVoltage(500));
     TEST_ASSERT_EQUAL_INT(5000, CalcVoltage(1024)); // max voltage
 }
 
-void TestGetCurrent()
+void TestCalcCurrent()
 {
     TEST_ASSERT_EQUAL_INT(0, CalcCurrent(0, 0));
-    TEST_ASSERT_EQUAL_INT(1945600, CalcCurrent(1024, 10));
+    TEST_ASSERT_EQUAL_INT(2441, CalcCurrent(500, 1));
+    TEST_ASSERT_EQUAL_INT(500, CalcCurrent(1024, 10));
 }
 
 void TestCalacPI()
@@ -70,8 +71,8 @@ int main(int argc, char **argv)
 {
     UNITY_BEGIN();
 
-    RUN_TEST(TestGetVoltage);
-    RUN_TEST(TestGetCurrent);
+    RUN_TEST(TestCalcVoltage);
+    RUN_TEST(TestCalcCurrent);
     RUN_TEST(TestCalacPI);
     RUN_TEST(TestGetCiukDuty);
     RUN_TEST(TestRpm2rads);
