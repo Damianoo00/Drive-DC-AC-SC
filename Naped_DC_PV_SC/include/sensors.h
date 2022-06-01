@@ -13,8 +13,8 @@
 
 #include <RotaryEncoder.h>
 
-long GetCurrent(int, int);
-long CalcCurrent(int, int);
+int GetCurrent(int, int);
+int CalcCurrent(int, int);
 int GetSpeed(RotaryEncoder *);
 int GetVoltage(int);
 int CalcVoltage(int);

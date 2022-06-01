@@ -24,8 +24,8 @@ void TestCalcVoltage()
 void TestCalcCurrent()
 {
     TEST_ASSERT_EQUAL_INT(0, CalcCurrent(0, 0));
-    TEST_ASSERT_EQUAL_INT(2441, CalcCurrent(500, 1));
-    TEST_ASSERT_EQUAL_INT(500, CalcCurrent(1024, 10));
+    TEST_ASSERT_EQUAL_INT(19, CalcCurrent(190, 47));
+    TEST_ASSERT_EQUAL_INT(106, CalcCurrent(1024, 47));
 }
 
 void TestCalacPI()
