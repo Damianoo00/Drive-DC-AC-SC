@@ -11,28 +11,31 @@
 #include "../include/PWM.h"
 #include <Arduino.h>
 
+constexpr int PWM_pin = 9;
+constexpr int Inwert_PWM_pin = 10;
+constexpr int DeadTime = 2;
+
 /**
- * @brief Init PWM on device output
- *
- * @param pin analog pin adress
- *
+ * @brief Init PWM on 10 and 9 (inwerted) device analog ports
  */
-void PWM_begin(int pin)
+void PWM_begin()
 {
-    pinMode(pin, OUTPUT);
+    TCCR1A = (TCCR1A & 0x0F) | 0xB0;
+    pinMode(PWM_pin, OUTPUT);
+    pinMode(Inwert_PWM_pin, OUTPUT);
 }
 
 /**
- * @brief Genarate PWM with set duty (0 - 100) and output it on analog pin
- *
- * @param pin analog pin adress
- * @param dupty duty of PWM signal in % (0-100)
+ * @brief Genarate PWM on analog ports 10 and 9 with setted deadtime
+
+ * @param duty duty of PWM signal in % (0-100)
  *
  */
-void PWM_write(int pin, int duty)
+void PWM_write(int duty)
 {
     static int AnalogDuty = CalcDAC(duty);
-    analogWrite(pin, AnalogDuty);
+    analogWrite(PWM_pin, AnalogDuty);
+    analogWrite(Inwert_PWM_pin, AnalogDuty + DeadTime);
 }
 
 /**

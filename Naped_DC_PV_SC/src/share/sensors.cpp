@@ -18,7 +18,7 @@
  * @param pin analog input adress
  * @param resistance shut resistor resistance in Ohm
  *
- * @return (long)return current value in mA
+ * @return (int) return current value in mA
  *
  */
 int GetCurrent(int pin, int resistance)
@@ -32,7 +32,7 @@ int GetCurrent(int pin, int resistance)
  *
  * @param raw_adc raw adc value (0-255)
  * @param resistance shut resistance (Ohm)
- * @return (long) current value in mA
+ * @return (int) current value in mA
  */
 int CalcCurrent(int raw_adc, int resistance)
 {
