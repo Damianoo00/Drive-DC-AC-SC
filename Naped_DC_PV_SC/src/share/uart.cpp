@@ -50,7 +50,7 @@ int uart_recive()
  * @param curr pointer to measured current value
  * @param speed pointer to measured speed value
  */
-void uart_recive_2_params(int *curr, int *speed)
+void uart_recive_2_params(long *curr, long *speed)
 {
     while (!Serial.available())
     {
