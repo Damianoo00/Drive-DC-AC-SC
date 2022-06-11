@@ -23,9 +23,9 @@ void TestCalcVoltage()
 
 void TestCalcCurrent()
 {
-    TEST_ASSERT_EQUAL_INT(0, CalcCurrent(0, 0));
-    TEST_ASSERT_EQUAL_INT(19, CalcCurrent(190, 47));
-    TEST_ASSERT_EQUAL_INT(106, CalcCurrent(1024, 47));
+    TEST_ASSERT_EQUAL_INT(0, CalcCurrent(0, 500));
+    TEST_ASSERT_EQUAL_INT(1854, CalcCurrent(190, 500));
+    TEST_ASSERT_EQUAL_INT(10000, CalcCurrent(1024, 500));
 }
 
 void TestGetCiukDuty()
@@ -49,6 +49,13 @@ void TestCalcDac()
     TEST_ASSERT_EQUAL_INT(51, CalcDAC(20));
 }
 
+void TestVoltageToDuty()
+{
+    TEST_ASSERT_EQUAL_INT(0, VoltageToDuty(0.0, 6));
+    TEST_ASSERT_EQUAL_INT(100, VoltageToDuty(6.0, 6));
+    TEST_ASSERT_EQUAL_INT(50, VoltageToDuty(3.0, 6));
+}
+
 int main(int argc, char **argv)
 {
     UNITY_BEGIN();
@@ -58,6 +65,7 @@ int main(int argc, char **argv)
     RUN_TEST(TestGetCiukDuty);
     RUN_TEST(TestRpm2rads);
     RUN_TEST(TestCalcDac);
+    RUN_TEST(TestVoltageToDuty);
 
     UNITY_END();
 }

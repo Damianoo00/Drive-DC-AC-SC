@@ -16,7 +16,7 @@
  * @brief Read current value [mA] "Shut method", resistance in mOhm
  *
  * @param pin analog input adress
- * @param resistance shut resistor resistance in Ohm
+ * @param resistance shut resistor resistance in mOhm
  *
  * @return (int) return current value in mA
  *
@@ -30,13 +30,14 @@ int GetCurrent(int pin, int resistance)
 /**
  * @brief Calculate current value from adc value
  *
- * @param raw_adc raw adc value (0-255)
- * @param resistance shut resistance (Ohm)
+ * @param raw_adc raw adc value (0-1024)
+ * @param resistance shut resistance (mOhm)
  * @return (int) current value in mA
  */
 int CalcCurrent(int raw_adc, int resistance)
 {
-    return CalcVoltage(raw_adc) / resistance;
+    constexpr int MiliOhmToOhm = 1000;
+    return (long)CalcVoltage(raw_adc) * MiliOhmToOhm / resistance;
 }
 
 /**

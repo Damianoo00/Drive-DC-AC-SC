@@ -11,8 +11,9 @@
 #ifndef PWM_LIB_H
 #define PWM_LIB_H
 
-void PWM_begin();
+void PWM_begin(int);
 void PWM_write(int);
 int CalcDAC(int);
+int VoltageToDuty(float, int);
 
 #endif
